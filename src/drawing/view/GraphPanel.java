@@ -12,48 +12,43 @@ import java.util.ArrayList;
 
 public class GraphPanel extends JPanel
 {
-	private int [] data = {27, 5, 54, 10};
+	private int [] data;
 	private int width;
 	private ArrayList<Rectangle> graph;
 	
-	public GraphPanel(int [] data)
+	public GraphPanel()
 	{
-		if(data != null)
-		{
-			this.data = data;
-		}
-		this.width = 10;
-		graph = new ArrayList<Rectangle>();
+		data = new int[] {20, 36, 43, 125, 178};
+		setupPanel();
+	}
+	
+	private void setupPanel()
+	{
 		
-		this.setMinimumSize(new Dimension(250, 250));
 	}
 	
 	@Override
 	protected void paintComponent(Graphics basic)
 	{
-		graph.clear();
-		this.setBackground(new Color(138, 43, 226));
-		if(this != null)
-		{
-			width = this.getWidth()/data.length;
-		}
+		super.paintComponent(basic);
+		
+		Graphics2D drawing = (Graphics2D) basic;
+		
 		for(int index = 0; index < data.length; index++)
 		{
-			int xPoint = index * width;
-			int yPoint = this.getHeight() - data[index];
-			Rectangle current = new Rectangle(xPoint, yPoint, width, data[index]);
-			graph.add(current);
-		}
-		Graphics2D drawing = (Graphics2D) basic;
-		for(Rectangle current : graph)
-		{
+			int height = this.getHeight()/data.length;
+			int width = data[index];
+			int xPosition = 0;
+			int yPosition = height * index;
+			
 			int red = (int) (Math.random() * 256);
 			int green = (int) (Math.random() * 256);
 			int blue = (int) (Math.random() * 256);
 			int alpha = (int) (Math.random() * 256);
-			Color random = new Color(red, green, blue, alpha);
-			drawing.setColor(random);;
-			drawing.fill(current);
+			
+			drawing.setColor(new Color(red, green, blue, alpha));
+			
+			drawing.fill(new Rectangle(xPosition, yPosition, width, height));
 		}
 	}
 	

@@ -8,14 +8,15 @@ import java.awt.event.ActionListener;
 
 public class DrawingPanel extends JPanel
 {
+	private SpringLayout baseLayout;
 	private ShapePanel shapePanel;
+	private GraphPanel graphPanel;
 	private JButton rectangleButton;
 	private JButton triangleButton;
 	private JButton circleButton;
 	private JButton ellipseButton;
 	private JButton polygonButton;
 	private JButton resetButton;
-	private SpringLayout baseLayout;
 	private DrawingController baseController;
 
 	public DrawingPanel(DrawingController baseController)
@@ -23,6 +24,8 @@ public class DrawingPanel extends JPanel
 		super();
 		this.baseController = baseController;
 		
+		baseLayout = new SpringLayout();
+		graphPanel = new GraphPanel();
 		shapePanel = new ShapePanel(baseController);
 		rectangleButton = new JButton("Draw rectangles");
 		triangleButton = new JButton("Draw triangles");
@@ -30,7 +33,7 @@ public class DrawingPanel extends JPanel
 		ellipseButton = new JButton("Draw ellipse");
 		polygonButton = new JButton("Draw polygon");
 		resetButton = new JButton("Reset");
-		baseLayout = new SpringLayout();
+		
 
 		setupPanel();
 		setupLayout();
@@ -50,27 +53,31 @@ public class DrawingPanel extends JPanel
 		this.add(polygonButton);
 		this.add(resetButton);
 		this.add(shapePanel);
+		this.add(graphPanel);
 	}
 	
 	private void setupLayout()
 	{
+		baseLayout.putConstraint(SpringLayout.WEST, graphPanel, -533, SpringLayout.EAST, this);
+		baseLayout.putConstraint(SpringLayout.EAST, graphPanel, -10, SpringLayout.EAST, this);
+		baseLayout.putConstraint(SpringLayout.NORTH, graphPanel, 6, SpringLayout.SOUTH, shapePanel);
+		baseLayout.putConstraint(SpringLayout.SOUTH, graphPanel, 191, SpringLayout.SOUTH, shapePanel);
 		baseLayout.putConstraint(SpringLayout.EAST, shapePanel, 0, SpringLayout.EAST, this);
 		baseLayout.putConstraint(SpringLayout.NORTH, shapePanel, 0, SpringLayout.NORTH, this);
 		baseLayout.putConstraint(SpringLayout.WEST, shapePanel, 221, SpringLayout.WEST, this);
-		baseLayout.putConstraint(SpringLayout.SOUTH, shapePanel, 0, SpringLayout.SOUTH, this);
-		baseLayout.putConstraint(SpringLayout.WEST, polygonButton, 35, SpringLayout.WEST, this);
-		baseLayout.putConstraint(SpringLayout.WEST, ellipseButton, 35, SpringLayout.WEST, this);
-		baseLayout.putConstraint(SpringLayout.WEST, circleButton, 35, SpringLayout.WEST, this);
-		baseLayout.putConstraint(SpringLayout.WEST, triangleButton, 35, SpringLayout.WEST, this);
-		baseLayout.putConstraint(SpringLayout.WEST, rectangleButton, 0, SpringLayout.WEST, triangleButton);
-		baseLayout.putConstraint(SpringLayout.SOUTH, rectangleButton, -6, SpringLayout.NORTH, triangleButton);
-		baseLayout.putConstraint(SpringLayout.SOUTH, triangleButton, -6, SpringLayout.NORTH, circleButton);
-		baseLayout.putConstraint(SpringLayout.WEST, resetButton, 55, SpringLayout.WEST, this);
-		baseLayout.putConstraint(SpringLayout.SOUTH, circleButton, -6, SpringLayout.NORTH, ellipseButton);
-		baseLayout.putConstraint(SpringLayout.SOUTH, ellipseButton, -6, SpringLayout.NORTH, polygonButton);
-		baseLayout.putConstraint(SpringLayout.SOUTH, polygonButton, -17, SpringLayout.NORTH, resetButton);
-		baseLayout.putConstraint(SpringLayout.SOUTH, resetButton, -10, SpringLayout.SOUTH, this);
-		
+		baseLayout.putConstraint(SpringLayout.NORTH, rectangleButton, 26, SpringLayout.NORTH, this);
+		baseLayout.putConstraint(SpringLayout.WEST, rectangleButton, 11, SpringLayout.WEST, this);
+		baseLayout.putConstraint(SpringLayout.NORTH, triangleButton, 12, SpringLayout.SOUTH, rectangleButton);
+		baseLayout.putConstraint(SpringLayout.WEST, triangleButton, 0, SpringLayout.WEST, rectangleButton);
+		baseLayout.putConstraint(SpringLayout.NORTH, circleButton, 6, SpringLayout.SOUTH, triangleButton);
+		baseLayout.putConstraint(SpringLayout.WEST, circleButton, 0, SpringLayout.WEST, rectangleButton);
+		baseLayout.putConstraint(SpringLayout.SOUTH, shapePanel, 0, SpringLayout.SOUTH, resetButton);
+		baseLayout.putConstraint(SpringLayout.NORTH, resetButton, 6, SpringLayout.SOUTH, polygonButton);
+		baseLayout.putConstraint(SpringLayout.WEST, resetButton, 35, SpringLayout.WEST, this);
+		baseLayout.putConstraint(SpringLayout.NORTH, polygonButton, 6, SpringLayout.SOUTH, ellipseButton);
+		baseLayout.putConstraint(SpringLayout.WEST, polygonButton, 0, SpringLayout.WEST, rectangleButton);
+		baseLayout.putConstraint(SpringLayout.NORTH, ellipseButton, 6, SpringLayout.SOUTH, circleButton);
+		baseLayout.putConstraint(SpringLayout.WEST, ellipseButton, 0, SpringLayout.WEST, rectangleButton);
 	}
 	
 	private void setupListeners()
